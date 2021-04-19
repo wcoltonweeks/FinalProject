@@ -1,7 +1,9 @@
 ﻿using FinalProject.UI.MVC.Models;
+using FInalProject.DATA.EF;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -12,11 +14,13 @@ namespace FinalProject.UI.MVC.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private JobBoardEntities db = new JobBoardEntities(); //db context
+
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -154,8 +158,31 @@ namespace FinalProject.UI.MVC.Controllers
                 if (result.Succeeded)
                 {
                     #region CustomUserDetails/ResumeUpload
+                    string file = null;
+
+                    if (resume != null)
+                    {
+                        file = resume.FileName;
+                        string ext = file.Substring(file.LastIndexOf('.'));
+                        string[] goodExts = { ".pdf", ".docx" }; //good file extensions. add more good extensions later
+                        if (goodExts.Contains(ext.ToLower()) && resume.ContentLength <= 4194304)
+                        {
+                            string newName = Guid.NewGuid() + ext;
+                            resume.SaveAs(Server.MapPath("~/Content/Documents/") + newName);
+                            file = newName;//Creates a new file name to be stored in the DB and store the pdf in the specified path
+                        }
+                    }
+
+                    UserDetail deets = new UserDetail();
+                    deets.UserID = user.Id;
+                    deets.FirstName = model.FirstName;
+                    deets.LastName = model.LastName;
+                    deets.ResumeFilename = file;
+                    db.UserDetails.Add(deets);
+                    db.SaveChanges();
 
                     #endregion
+
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
