@@ -1,11 +1,11 @@
 ﻿<!doctype html>
 <html lang="en">
 <head>
-    <title>Covid &mdash; Website Template by Colorlib</title>
+    <title>COVF - Coronavirus Vaccination Foundation</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="fonts/icomoon/style.css">
+    <link rel="stylesheet" href="~/Content/fonts/icomoon/style.css">
     <link rel="stylesheet" href="~/Content/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/Content/css/jquery-ui.css">
     <link rel="stylesheet" href="~/Content/css/owl.carousel.min.css">
@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="~/Content/css/owl.theme.default.min.css">
     <link rel="stylesheet" href="~/Content/css/jquery.fancybox.min.css">
     <link rel="stylesheet" href="~/Content/css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
-    <link rel="stylesheet" href="fonts/flaticon-covid/font/flaticon.css">
+    <link rel="stylesheet" href="~/Content/fonts/flaticon/font/flaticon.css">
+    <link rel="stylesheet" href="~/Content/fonts/flaticon-covid/font/flaticon.css">
     <link rel="stylesheet" href="~/Content/css/aos.css">
     <link rel="stylesheet" href="~/Content/css/style.css">
     <link href="~/Content/css/custom.css" rel="stylesheet" />
@@ -48,31 +48,34 @@
                         <nav class="site-navigation position-relative text-right" role="navigation">
                             <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                                 <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
-                                @*<li class="has-children">
-                                    <a href="prevention.html" class="nav-link">Prevention</a>
+                                <li class="has-children">
+                                    <a class="nav-link">Manager</a>
                                     <ul class="dropdown">
-                                        <li><a href="#" class="nav-link">Stay at home</a></li>
-                                        <li><a href="#" class="nav-link">Keep social distancing</a></li>
-                                        <li><a href="#" class="nav-link">Wear facemasl</a></li>
-                                        <li><a href="#" class="nav-link">Wash your hands</a></li>
-                                        <li class="has-children">
-                                            <a href="#">More Links</a>
-                                            <ul class="dropdown">
-                                                <li><a href="#">Menu One</a></li>
-                                                <li><a href="#">Menu Two</a></li>
-                                                <li><a href="#">Menu Three</a></li>
-                                            </ul>
-                                        </li>
+                                        @Html.ActionLink("Applications", "Index", "Applications", null, new { @class = "nav-link" })
+                                        @Html.ActionLink("Open Positions", "Index", "OpenPositions", null, new { @class = "nav-link" })
                                     </ul>
-                                </li>*@
+                                </li>
+
+                                <li class="has-children">
+                                    <a class="nav-link">Admin</a>
+                                    <ul class="dropdown">
+                                        @Html.ActionLink("Applications", "Index", "Applications", null, new { @class = "nav-link" })
+                                        @Html.ActionLink("Open Positions", "Index", "OpenPositions", null, new { @class = "nav-link" })
+                                        @Html.ActionLink("Application Statuses", "Index", "ApplicationStatus", null, new { @class = "nav-link" })
+                                        @Html.ActionLink("Positions", "Index", "Positions", null, new { @class = "nav-link" })
+                                        @Html.ActionLink("Locations", "Index", "Locations", null, new { @class = "nav-link" })
+                                        @Html.ActionLink("Users Admin", "Index", "UsersAdmin", null, new { @class = "nav-link" })
+                                        @Html.ActionLink("Roles Admin", "Index", "RolesAdmin", null, new { @class = "nav-link" })                                     
+                                    </ul>
+                                </li>
                                 <li>@Html.ActionLink("About", "About", "Home")</li>
                                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
 
-                                @*<li><a href="blog.html" class="nav-link">Blog</a></li>
-                                <li><a href="contact.html" class="nav-link">Contact</a></li>*@
+                                <li>@Html.Partial("_LoginPartial")</li>
                             </ul>
                         </nav>
                     </div>
+                    
 
                     <div class="col-6 d-inline-block d-xl-none ml-md-0 py-3" style="position: relative; top: 3px;"><a href="#" class="site-menu-toggle js-menu-toggle float-right"><span class="icon-menu h3 text-black"></span></a></div>
                 </div>
