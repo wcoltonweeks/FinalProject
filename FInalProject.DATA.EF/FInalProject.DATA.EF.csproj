@@ -53,9 +53,10 @@
     <Compile Include="Application.cs">
       <DependentUpon>JobBoardModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ApplicationStatu.cs">
+    <Compile Include="ApplicationStatus.cs">
       <DependentUpon>JobBoardModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="JobBoardMetadata\JobBoardMetadata.cs" />
     <Compile Include="JobBoardModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

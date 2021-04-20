@@ -26,7 +26,7 @@ namespace FInalProject.DATA.EF
         }
     
         public virtual DbSet<Application> Applications { get; set; }
-        public virtual DbSet<ApplicationStatu> ApplicationStatus { get; set; }
+        public virtual DbSet<ApplicationStatus> ApplicationStatus1 { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<OpenPosition> OpenPositions { get; set; }
         public virtual DbSet<Position> Positions { get; set; }

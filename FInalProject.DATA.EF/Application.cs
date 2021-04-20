@@ -23,7 +23,7 @@ namespace FInalProject.DATA.EF
         public string ResumeFilename { get; set; }
         public string EmployeeNotes { get; set; }
     
-        public virtual ApplicationStatu ApplicationStatu { get; set; }
+        public virtual ApplicationStatus ApplicationStatu { get; set; }
         public virtual OpenPosition OpenPosition { get; set; }
         public virtual UserDetail UserDetail { get; set; }
     }

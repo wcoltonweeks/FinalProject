@@ -1,4 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using FinalProject.UI.MVC.Models;
+using System.Net;
+using System.Net.Mail;
+using System.Web.Configuration;
+
+using System.Web.Mvc;
 
 namespace FinalProject.UI.MVC.Controllers
 {
@@ -25,6 +30,42 @@ namespace FinalProject.UI.MVC.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Contact(ContactViewModel cvm)
+        {
+            string emailServer = WebConfigurationManager.AppSettings["EmailServer"];            string emailPW = WebConfigurationManager.AppSettings["EmailPW"];            string emailUser = WebConfigurationManager.AppSettings["EmailUser"];            string emailToAddress = WebConfigurationManager.AppSettings["EmailToAddress"];
+
+            if (!ModelState.IsValid)
+            {
+                return View(cvm);
+            }
+
+            // 1. build the body of the email
+            string body = $"You have revieved an email from {cvm.Name} at the address {cvm.Email} with a subject of {cvm.Subject}<br><strong>Message:</strong>{cvm.Message}";
+
+            // 2.instantiate the MainMessage object (needs System.Net.Mail)
+            MailMessage msg = new MailMessage($"{emailUser}", $"{emailToAddress}", cvm.Subject, body);
+            // (optional) customize the MainMessage properties
+            msg.IsBodyHtml = true;
+
+            //instantiate the SmtpClient
+            SmtpClient client = new SmtpClient($"{emailServer}");
+
+            // 4. provide credentials for the client (needs the System.Net namespace)
+            client.Credentials = new NetworkCredential($"{emailUser}", $"{emailPW}");
+
+            // 5. attempt to send the email
+            try
+            {
+                client.Send(msg);
+            }
+            catch (System.Exception ex)
+            {
+                ViewBag.ErrorMessage = "Sorry, had some trouble with that. see stacktrace or contact an admin." + ex.StackTrace;
+            }
+            return View("EmailConfirmation", cvm);
         }
     }
 }
