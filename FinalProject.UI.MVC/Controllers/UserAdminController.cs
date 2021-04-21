@@ -1,4 +1,5 @@
 ﻿using FinalProject.UI.MVC.Models;
+using FInalProject.DATA.EF;
 using Microsoft.AspNet.Identity.Owin;
 using System.Data.Entity;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace FinalProject.UI.MVC.Controllers
     [Authorize(Roles = "Admin")]
     public class UsersAdminController : Controller
     {
+        private JobBoardEntities db = new JobBoardEntities(); //db context
+
         public UsersAdminController()
         {
         }
@@ -114,7 +117,18 @@ namespace FinalProject.UI.MVC.Controllers
                     return View();
 
                 }
+
+                UserDetail deets = new UserDetail();
+                deets.UserID = user.Id;
+                deets.FirstName = userViewModel.FirstName;
+                deets.LastName = userViewModel.LastName;
+                //deets.ResumeFilename = file;
+                db.UserDetails.Add(deets);
+                db.SaveChanges();
+
+
                 return RedirectToAction("Index");
+
             }
             ViewBag.RoleId = new SelectList(RoleManager.Roles, "Name", "Name");
             return View();
@@ -137,8 +151,12 @@ namespace FinalProject.UI.MVC.Controllers
 
             var userRoles = await UserManager.GetRolesAsync(user.Id);
 
+            UserDetail deets = (UserDetail)db.UserDetails.Where(x => x.UserID == user.Id).FirstOrDefault();
+
             return View(new EditUserViewModel()
             {
+                FirstName = deets.FirstName,
+                LastName = deets.LastName,
                 Id = user.Id,
                 Email = user.Email,
                 RolesList = RoleManager.Roles.ToList().Select(x => new SelectListItem()
@@ -154,20 +172,22 @@ namespace FinalProject.UI.MVC.Controllers
         // POST: /Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Email,Id")] EditUserViewModel editUser, params string[] selectedRole)
+        public async Task<ActionResult> Edit([Bind(Include = "Email,Id,FirstName,LastName")] EditUserViewModel editUser, params string[] selectedRole)
         {
+            var user = await UserManager.FindByIdAsync(editUser.Id);
+            user.UserName = editUser.Email;
+            user.Email = editUser.Email;
+            var userRoles = await UserManager.GetRolesAsync(user.Id);
+
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByIdAsync(editUser.Id);
+
                 if (user == null)
                 {
                     return HttpNotFound();
                 }
 
-                user.UserName = editUser.Email;
-                user.Email = editUser.Email;
 
-                var userRoles = await UserManager.GetRolesAsync(user.Id);
 
                 selectedRole = selectedRole ?? new string[] { };
 
@@ -185,10 +205,31 @@ namespace FinalProject.UI.MVC.Controllers
                     ModelState.AddModelError("", result.Errors.First());
                     return View();
                 }
+
+
+                UserDetail deets = (UserDetail)db.UserDetails.Where(x => x.UserID == user.Id).FirstOrDefault();
+                deets.FirstName = editUser.FirstName;
+                deets.LastName = editUser.LastName;
+                //deets.ResumeFilename = file;
+                db.Entry(deets).State = EntityState.Modified;
+                db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
             ModelState.AddModelError("", "Something failed.");
-            return View();
+
+
+            return View(new EditUserViewModel()
+            {
+                Id = user.Id,
+                Email = user.Email,
+                RolesList = RoleManager.Roles.ToList().Select(x => new SelectListItem()
+                {
+                    Selected = userRoles.Contains(x.Name),
+                    Text = x.Name,
+                    Value = x.Name
+                })
+            });
         }
 
         //

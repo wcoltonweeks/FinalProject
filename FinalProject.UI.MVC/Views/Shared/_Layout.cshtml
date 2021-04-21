@@ -48,28 +48,40 @@
                         <nav class="site-navigation position-relative text-right" role="navigation">
                             <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                                 <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
-                                <li class="has-children">
-                                    <a class="nav-link">Manager</a>
-                                    <ul class="dropdown">
-                                        @Html.ActionLink("Applications", "Index", "Applications", null, new { @class = "nav-link" })
-                                        @Html.ActionLink("Open Positions", "Index", "OpenPositions", null, new { @class = "nav-link" })
-                                    </ul>
-                                </li>
-
-                                <li class="has-children">
-                                    <a class="nav-link">Admin</a>
-                                    <ul class="dropdown">
-                                        @Html.ActionLink("Applications", "Index", "Applications", null, new { @class = "nav-link" })
-                                        @Html.ActionLink("Open Positions", "Index", "OpenPositions", null, new { @class = "nav-link" })
-                                        @Html.ActionLink("Application Statuses", "Index", "ApplicationStatus", null, new { @class = "nav-link" })
-                                        @Html.ActionLink("Positions", "Index", "Positions", null, new { @class = "nav-link" })
-                                        @Html.ActionLink("Locations", "Index", "Locations", null, new { @class = "nav-link" })
-                                        @Html.ActionLink("Users Admin", "Index", "UsersAdmin", null, new { @class = "nav-link" })
-                                        @Html.ActionLink("Roles Admin", "Index", "RolesAdmin", null, new { @class = "nav-link" })                                     
-                                    </ul>
-                                </li>
                                 <li>@Html.ActionLink("About", "About", "Home")</li>
                                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+
+                                @if (User.IsInRole("Employee"))
+                                {
+                                    @Html.ActionLink("Open Positions", "Index", "OpenPositions", null, new { @class = "nav-link" })
+                                }
+
+                                @if (User.IsInRole("Manager"))
+                                {
+                                    <li class="has-children">
+                                        <a class="nav-link">Manager</a>
+                                        <ul class="dropdown">
+                                            @Html.ActionLink("Applications", "Index", "Applications", null, new { @class = "nav-link" })
+                                            @Html.ActionLink("Open Positions", "Index", "OpenPositions", null, new { @class = "nav-link" })
+                                        </ul>
+                                    </li>
+                                }
+
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <li class="has-children">
+                                        <a class="nav-link">Admin</a>
+                                        <ul class="dropdown">
+                                            @Html.ActionLink("Applications", "Index", "Applications", null, new { @class = "nav-link" })
+                                            @Html.ActionLink("Open Positions", "Index", "OpenPositions", null, new { @class = "nav-link" })
+                                            @Html.ActionLink("Application Statuses", "Index", "ApplicationStatus", null, new { @class = "nav-link" })
+                                            @Html.ActionLink("Positions", "Index", "Positions", null, new { @class = "nav-link" })
+                                            @Html.ActionLink("Locations", "Index", "Locations", null, new { @class = "nav-link" })
+                                            @Html.ActionLink("Users Admin", "Index", "UsersAdmin", null, new { @class = "nav-link" })
+                                            @Html.ActionLink("Roles Admin", "Index", "RolesAdmin", null, new { @class = "nav-link" })
+                                        </ul>
+                                    </li>
+                                }
 
                                 <li>@Html.Partial("_LoginPartial")</li>
                             </ul>

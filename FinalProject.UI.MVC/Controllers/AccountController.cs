@@ -1,9 +1,11 @@
 ﻿using FinalProject.UI.MVC.Models;
+using FinalProject.UI.MVC.Utilities;
 using FInalProject.DATA.EF;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -149,7 +151,7 @@ namespace FinalProject.UI.MVC.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase resume)
+        public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase resume, HttpPostedFileBase photo)
         {
             if (ModelState.IsValid)
             {
@@ -173,21 +175,55 @@ namespace FinalProject.UI.MVC.Controllers
                         }
                     }
 
+                    
+
+                    #endregion
+
+                    #region Photo Upload
+                    
+                    string picfile = "NoImage.png";
+
+                    if (photo != null)
+                    {
+                        picfile = photo.FileName;
+                        string ext = picfile.Substring(picfile.LastIndexOf('.'));
+                        string[] goodExts = { ".jpeg", ".jpg", ".png", ".gif" };
+
+                        if (goodExts.Contains(ext.ToLower()) && photo.ContentLength <= 4194304)
+                        {
+                            //greate a new file name using a GUID
+                            picfile = Guid.NewGuid() + ext;
+                            #region Rezise Image
+                            string savePath = Server.MapPath("~/Content/images/Photos/");
+
+                            Image convertedImage = Image.FromStream(photo.InputStream);
+                            int maxImageSize = 500;
+                            int maxThumbSize = 100;
+
+                            ImageService.ResizeImage(savePath, picfile, convertedImage, maxImageSize, maxThumbSize);
+
+                        }
+
+                    }
+                    #endregion
+
                     UserDetail deets = new UserDetail();
                     deets.UserID = user.Id;
                     deets.FirstName = model.FirstName;
                     deets.LastName = model.LastName;
                     deets.ResumeFilename = file;
+                    deets.Photo = picfile;
                     db.UserDetails.Add(deets);
                     db.SaveChanges();
-
                     #endregion
 
-                    var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
-                    ViewBag.Link = callbackUrl;
-                    return View("DisplayEmail");
+                    UserManager.AddToRole(user.Id, "Employee");
+
+                    //Auto-login the user
+                    var trySignIn = await SignInManager.PasswordSignInAsync(user.UserName, model.Password, false, false);
+
+
+                    return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }

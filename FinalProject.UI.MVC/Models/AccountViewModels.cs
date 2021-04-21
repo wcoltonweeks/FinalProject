@@ -93,6 +93,8 @@ namespace FinalProject.UI.MVC.Models
         [Display(Name ="Resume")]
         public string ResumeFilename { get; set; }
 
+        public string Photo { get; set; }
+
     }
 
     public class ResetPasswordViewModel

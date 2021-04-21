@@ -6,7 +6,10 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using FinalProject.UI.MVC.Models;
 using FInalProject.DATA.EF;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace FinalProject.UI.MVC.Controllers
 {
@@ -39,7 +42,20 @@ namespace FinalProject.UI.MVC.Controllers
         // GET: Locations/Create
         public ActionResult Create()
         {
-            ViewBag.ManagerID = new SelectList(db.UserDetails, "UserID", "FirstName");
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+
+            var users = db.UserDetails.ToList();
+
+            List<UserDetail> mgrUsers = new List<UserDetail>();
+            foreach (var user in users)
+            {
+                if (userManager.IsInRole(user.UserID, "Manager"))
+                {
+                    mgrUsers.Add(user);
+                }
+            }
+
+            ViewBag.ManagerID = new SelectList(mgrUsers, "UserID", "FirstName");
             return View();
         }
 
@@ -50,6 +66,7 @@ namespace FinalProject.UI.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "LocationID,StoreNumber,City,State,ManagerID")] Location location)
         {
+     
             if (ModelState.IsValid)
             {
                 db.Locations.Add(location);
@@ -57,9 +74,11 @@ namespace FinalProject.UI.MVC.Controllers
                 return RedirectToAction("Index");
             }
 
+
             ViewBag.ManagerID = new SelectList(db.UserDetails, "UserID", "FirstName", location.ManagerID);
             return View(location);
         }
+
 
         // GET: Locations/Edit/5
         public ActionResult Edit(int? id)

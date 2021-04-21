@@ -35,6 +35,14 @@
             @Html.DisplayFor(model => model.ResumeFilename)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Photo)
+        </dt>
+
+        <dd>
+            <img src="~/Content/images/Photos/@Model.Photo" />
+        </dd>
+
     </dl>
 
     @using (Html.BeginForm()) {

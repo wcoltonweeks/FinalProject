@@ -188,6 +188,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utilities\ImageService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\aos.css" />
@@ -553,8 +554,6 @@
     <Content Include="_Archive\covid-master\scss\_site-blocks.scss" />
     <Content Include="_Archive\covid-master\scss\_site-navbar.scss" />
     <Content Include="Views\Home\EmailConfirmation.cshtml" />
-    <Content Include="Views\Applications\Create.cshtml" />
-    <Content Include="Views\Applications\Delete.cshtml" />
     <Content Include="Views\Applications\Details.cshtml" />
     <Content Include="Views\Applications\Edit.cshtml" />
     <Content Include="Views\Applications\Index.cshtml" />
@@ -587,6 +586,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Documents\" />
+    <Folder Include="Content\images\Photos\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

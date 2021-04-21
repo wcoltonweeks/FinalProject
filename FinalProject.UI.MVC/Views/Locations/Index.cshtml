@@ -1,51 +1,53 @@
 ﻿@model IEnumerable<FInalProject.DATA.EF.Location>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Locations";
 }
+<div id="main">
+    <h2>@ViewBag.Title</h2>
 
-<h2>Index</h2>
+    <p>
+        @Html.ActionLink("Add a New Location", "Create", null, new { @class = "btn btn-primary" })
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StoreNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserDetail.FirstName)
+            </th>
+            <th></th>
+        </tr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.StoreNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.City)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.State)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserDetail.FirstName)
-        </th>
-        <th></th>
-    </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StoreNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserDetail.FirstName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.LocationID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.LocationID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.LocationID })
+                </td>
+            </tr>
+        }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.StoreNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.City)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.State)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserDetail.FirstName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.LocationID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.LocationID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.LocationID })
-        </td>
-    </tr>
-}
-
-</table>
+    </table>
+</div>

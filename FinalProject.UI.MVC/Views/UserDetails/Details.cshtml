@@ -1,42 +1,63 @@
 ﻿@model FInalProject.DATA.EF.UserDetail
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Account Details";
 }
+<div id="main">
+    <h2>@ViewBag.Title</h2>
 
-<h2>Details</h2>
+    <div>
 
-<div>
-    <h4>UserDetail</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
+        <hr />
+ 
+        
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.UserID }, new { @class = "btn btn-primary" })
+                </p>
+                <dl class="dl-horizontal">
 
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.FirstName)
+                    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.FirstName)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.LastName)
+                    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ResumeFilename)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.LastName)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.ResumeFilename)
-        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ResumeFilename)
+                    </dt>
 
-    </dl>
+                    <dd>
+                        @Html.DisplayFor(model => model.ResumeFilename)
+                    </dd>
+
+                </dl>
+            </div>
+            <div class="col-md-6">
+                <dl class="dl-horizontal">
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Photo)
+                    </dt>
+
+                    <dd>
+                        <img src="~/Content/images/Photos/@Model.Photo" />
+                    </dd>
+
+                </dl>
+            </div>
+        </div>
+    </div>
+    
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.UserID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
