@@ -12,6 +12,7 @@ using FInalProject.DATA.EF;
 
 namespace FinalProject.UI.MVC.Controllers
 {
+    [Authorize(Roles="Admin")]
     public class UserDetailsController : Controller
     {
         private JobBoardEntities db = new JobBoardEntities();
@@ -23,6 +24,7 @@ namespace FinalProject.UI.MVC.Controllers
         }
 
         // GET: UserDetails/Details/5
+        [Authorize(Roles = "Admin, Manager, Employee")]
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -61,6 +63,7 @@ namespace FinalProject.UI.MVC.Controllers
         }
 
         // GET: UserDetails/Edit/5
+        [Authorize(Roles = "Employee")]
         public ActionResult Edit(string id)
         {
             if (id == null)

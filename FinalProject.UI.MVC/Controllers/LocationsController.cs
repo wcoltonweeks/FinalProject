@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace FinalProject.UI.MVC.Controllers
 {
+    [Authorize(Roles="Admin")]
     public class LocationsController : Controller
     {
         private JobBoardEntities db = new JobBoardEntities();

@@ -16,6 +16,7 @@ namespace FinalProject.UI.MVC.Controllers
         private JobBoardEntities db = new JobBoardEntities();
 
         // GET: Applications
+        [Authorize(Roles = "Admin, Manager, Employee")]
         public ActionResult Index()
         {
             if (User.IsInRole("Manager"))
@@ -37,6 +38,7 @@ namespace FinalProject.UI.MVC.Controllers
         }
 
         // GET: Applications/Details/5
+        [Authorize(Roles = "Admin, Manager, Employee")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -89,6 +91,7 @@ namespace FinalProject.UI.MVC.Controllers
         }
 
         // GET: Applications/Edit/5
+        [Authorize(Roles = "Admin, Manager")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -111,6 +114,7 @@ namespace FinalProject.UI.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Manager")]
         public ActionResult Edit([Bind(Include = "ApplicationID,OpenPositionID,UserID,ApplicationDate,ManagerNotes,ApplicationStatus,ResumeFilename,EmployeeNotes")] Application application)
         {
             if (ModelState.IsValid)
@@ -126,6 +130,7 @@ namespace FinalProject.UI.MVC.Controllers
         }
 
         // GET: Applications/Delete/5
+        [Authorize(Roles = "Admin, Manager")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -141,6 +146,7 @@ namespace FinalProject.UI.MVC.Controllers
         }
 
         // POST: Applications/Delete/5
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -159,7 +165,7 @@ namespace FinalProject.UI.MVC.Controllers
             }
             base.Dispose(disposing);
         }
-
+        [Authorize(Roles="Employee")]
         public ActionResult OneClickApply(int id)
         {
             string userId = User.Identity.GetUserId();

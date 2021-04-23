@@ -11,11 +11,13 @@ using Microsoft.AspNet.Identity;
 
 namespace FinalProject.UI.MVC.Controllers
 {
+    
     public class OpenPositionsController : Controller
     {
         private JobBoardEntities db = new JobBoardEntities();
 
         // GET: OpenPositions
+        [Authorize(Roles = "Admin, Manager, Employee")]
         public ActionResult Index()
         {
             if (User.IsInRole("Manager"))
@@ -33,6 +35,7 @@ namespace FinalProject.UI.MVC.Controllers
         }
 
         // GET: OpenPositions/Details/5
+        [Authorize(Roles = "Admin, Manager, Employee")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -48,6 +51,7 @@ namespace FinalProject.UI.MVC.Controllers
         }
 
         // GET: OpenPositions/Create
+        [Authorize(Roles = "Admin, Manager")]
         public ActionResult Create()
         {
             var managerID = User.Identity.GetUserId();
@@ -62,6 +66,7 @@ namespace FinalProject.UI.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Manager")]
         public ActionResult Create([Bind(Include = "OpenPositionID,PositionID,LocationID,IsFeature")] OpenPosition openPosition)
         {
             if (ModelState.IsValid)
@@ -77,6 +82,7 @@ namespace FinalProject.UI.MVC.Controllers
         }
 
         // GET: OpenPositions/Edit/5
+        [Authorize(Roles = "Admin, Manager")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -98,6 +104,7 @@ namespace FinalProject.UI.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Manager")]
         public ActionResult Edit([Bind(Include = "OpenPositionID,PositionID,LocationID,IsFeature")] OpenPosition openPosition)
         {
             if (ModelState.IsValid)
@@ -112,6 +119,7 @@ namespace FinalProject.UI.MVC.Controllers
         }
 
         // GET: OpenPositions/Delete/5
+        [Authorize(Roles = "Admin, Manager")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -127,6 +135,7 @@ namespace FinalProject.UI.MVC.Controllers
         }
 
         // POST: OpenPositions/Delete/5
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

@@ -1,0 +1,171 @@
+﻿@model IEnumerable<FinalProject.UI.MVC.Models.APIDataModel>
+
+@{
+    ViewBag.Title = "ApiTest";
+}
+
+<h2>ApiTest</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Rank)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Country)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Continent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TwoLetterSymbol)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ThreeLetterSymbol)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Infection_Risk)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Case_Fatality_Rate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Test_Percentage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Recovery_Proporation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalCases)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NewCases)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalDeaths)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NewDeaths)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalRecovered)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NewRecovered)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalTests)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Population)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.One_Case_Every_X_Ppl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.One_Death_Every_X_Ppl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.One_Test_Every_X_Ppl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Deaths_1M_Pop)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Serious_Critical)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tests_1M_Pop)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalCases_1M_Pop)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Rank)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Country)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Continent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TwoLetterSymbol)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ThreeLetterSymbol)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Infection_Risk)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Case_Fatality_Rate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Test_Percentage)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Recovery_Proporation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalCases)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NewCases)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalDeaths)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NewDeaths)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalRecovered)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NewRecovered)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalTests)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Population)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.One_Case_Every_X_Ppl)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.One_Death_Every_X_Ppl)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.One_Test_Every_X_Ppl)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Deaths_1M_Pop)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Serious_Critical)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tests_1M_Pop)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalCases_1M_Pop)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -183,6 +183,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
+    <Compile Include="Models\APIDataModel.cs" />
     <Compile Include="Models\ContactViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -585,6 +586,7 @@
     <Content Include="Views\OpenPositions\Index.cshtml" />
     <Content Include="Views\Applications\ApplicationConfirmed.cshtml" />
     <Content Include="Views\Applications\Delete.cshtml" />
+    <Content Include="Views\Home\ApiTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
