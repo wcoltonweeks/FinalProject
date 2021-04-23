@@ -10,67 +10,93 @@
     <div>
 
         <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.ApplicationDate)
-            </dt>
+        <div class="row">
+            <div class="col-md-6">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ApplicationDate)
+                    </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.ApplicationDate)
-            </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.ApplicationDate)
+                    </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.ManagerNotes)
-            </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ApplicationStatu.StatusName)
+                    </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.ManagerNotes)
-            </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.ApplicationStatu.StatusName)
+                    </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.ResumeFilename)
-            </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.OpenPosition.Position.Title)
+                    </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.ResumeFilename)
-            </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.OpenPosition.Position.Title)
+                    </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.EmployeeNotes)
-            </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.OpenPosition.Position.Description)
+                    </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.EmployeeNotes)
-            </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.OpenPosition.Position.Description)
+                    </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.ApplicationStatu.StatusName)
-            </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.ApplicationStatu.StatusName)
-            </dd>
+                </dl>
+            </div>
+            <div class="col-md-6">
+                <dl>
+                    <dt></dt>
+                    <dd>
+                        <div class="profile-photo"><img src="~/Content/images/Photos/@Model.UserDetail.Photo" /></div>
+                    </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.OpenPosition.OpenPositionID)
-            </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.UserDetail.FullName)
+                    </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.OpenPosition.OpenPositionID)
-            </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.UserDetail.FullName)
+                    </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.UserDetail.FirstName)
-            </dt>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                    {
+                        <dt>
+                            @Html.DisplayNameFor(model => model.ManagerNotes)
+                        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.UserDetail.FirstName)
-            </dd>
+                        <dd>
+                            @Html.DisplayFor(model => model.ManagerNotes)
+                        </dd>
+                    }
+                    <dt>
+                        @Html.DisplayNameFor(model => model.EmployeeNotes)
+                    </dt>
 
-        </dl>
+                    <dd>
+                        @Html.DisplayFor(model => model.EmployeeNotes)
+                    </dd>
+
+                    <dt></dt>
+
+                    <dd>
+                        <a href="~/Content/Documents/@Model.ResumeFilename" class="btn btn-primary" target="_blank">View Resume</a>
+                    </dd>
+
+                </dl>
+            </div>
+        </div>
     </div>
     <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ApplicationID }) |
-        @Html.ActionLink("Back to List", "Index")
+        @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ApplicationID }, new { @class="btn btn-primary"}) 
+        }
+
+        @Html.ActionLink("Back to Applications", "Index", null, new { @class = "btn btn-primary" })
     </p>
 </div>

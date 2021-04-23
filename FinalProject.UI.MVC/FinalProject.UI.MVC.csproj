@@ -240,6 +240,7 @@
     <Content Include="Content\images\person_1.jpg" />
     <Content Include="Content\images\person_2.jpg" />
     <Content Include="Content\images\person_3.jpg" />
+    <Content Include="Content\images\Photos\NoImage.png" />
     <Content Include="Content\images\protect.png" />
     <Content Include="Content\images\symptoms.png" />
     <Content Include="Content\images\symptom_cough.png" />
@@ -582,11 +583,12 @@
     <Content Include="Views\OpenPositions\Details.cshtml" />
     <Content Include="Views\OpenPositions\Edit.cshtml" />
     <Content Include="Views\OpenPositions\Index.cshtml" />
+    <Content Include="Views\Applications\ApplicationConfirmed.cshtml" />
+    <Content Include="Views\Applications\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Documents\" />
-    <Folder Include="Content\images\Photos\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

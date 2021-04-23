@@ -85,11 +85,11 @@ namespace FinalProject.UI.MVC.Controllers
             if (ModelState.IsValid)
             {
                 #region CustomUserDetails/ResumeUpload
-                string file = null;
-                string picfile = "NoImage.png";
+            
 
                 if (resume != null)
                 {
+                    string file = null;
                     file = resume.FileName;
                     string ext = file.Substring(file.LastIndexOf('.'));
                     string[] goodExts = { ".pdf", ".docx" }; //good file extensions. add more good extensions later
@@ -98,6 +98,7 @@ namespace FinalProject.UI.MVC.Controllers
                         string newName = Guid.NewGuid() + ext;
                         resume.SaveAs(Server.MapPath("~/Content/Documents/") + newName);
                         file = newName;//Creates a new file name to be stored in the DB and store the pdf in the specified path
+                        userDetail.ResumeFilename = file;
                     }
                 }
 
@@ -109,6 +110,8 @@ namespace FinalProject.UI.MVC.Controllers
                
                 if (photo != null)
                 {
+
+                    string picfile = "NoImage.png";
                     picfile = photo.FileName;
                     string ext = picfile.Substring(picfile.LastIndexOf('.'));
                     string[] goodExts = { ".jpeg", ".jpg", ".png", ".gif" };
@@ -125,14 +128,14 @@ namespace FinalProject.UI.MVC.Controllers
                         int maxThumbSize = 100; 
 
                         ImageService.ResizeImage(savePath, picfile, convertedImage, maxImageSize, maxThumbSize);
-                        
+                        userDetail.Photo = picfile;
                     }
                    
                 }
               
 
-                userDetail.ResumeFilename = file;
-                userDetail.Photo = picfile;
+              
+       
                
                 db.Entry(userDetail).State = EntityState.Modified;
                 db.SaveChanges();

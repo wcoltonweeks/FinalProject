@@ -3,3 +3,19 @@
     margin: auto;
     padding-top: 10em;
 }
+@media (max-width: 900px){
+    #main {
+        max-width: 900px;
+        font-size: 13px;
+        margin: auto;
+    }
+}
+.profile-photo {
+    max-width: 300px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.profile-photo img{
+    max-width: 300px;
+}

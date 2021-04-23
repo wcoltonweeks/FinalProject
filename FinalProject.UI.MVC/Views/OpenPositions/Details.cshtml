@@ -1,42 +1,85 @@
 ﻿@model FInalProject.DATA.EF.OpenPosition
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Position Details";
 }
+<div id="main">
+    <h2>@ViewBag.Title</h2>
 
-<h2>Details</h2>
+    <div>
 
-<div>
-    <h4>OpenPosition</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.IsFeature)
-        </dt>
+        <hr />
+        <div class="row">
+            <div class="col-md-6">
+                <dl class="dl-horizontal">
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                    {
+                        <dt>
+                            @Html.DisplayNameFor(model => model.IsFeature)
+                        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.IsFeature)
-        </dd>
+                        <dd>
+                            @Html.DisplayFor(model => model.IsFeature)
+                        </dd>
+                    }
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Location.StoreNumber)
+                    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Location.StoreNumber)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Location.StoreNumber)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Location.StoreNumber)
-        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Location.City)
+                    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Position.Title)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Location.City)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Position.Title)
-        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Location.State)
+                    </dt>
 
-    </dl>
+                    <dd>
+                        @Html.DisplayFor(model => model.Location.State)
+                    </dd>
+
+                   
+
+                </dl>
+            </div>
+            <div class="col-md-6">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Position.Title)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Position.Title)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Position.Description)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Position.Description)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+    {
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.OpenPositionID }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Back to Openings", "Index")
+        </p>
+    }
+    @if (User.IsInRole("Employee"))
+    {
+        <p>
+            @Html.ActionLink("Apply Now!", "OneClickApply", "Applications", new { id = Model.OpenPositionID }, new { @class = "btn btn-primary" })
+        </p>
+    }
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.OpenPositionID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

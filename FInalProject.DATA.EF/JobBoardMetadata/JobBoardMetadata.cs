@@ -20,6 +20,7 @@ namespace FInalProject.DATA.EF//.JobBoardMetadata
         public string UserID { get; set; }
         [Required(ErrorMessage ="Date is required")]
         [Display(Name ="Application Date")]
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         public System.DateTime ApplicationDate { get; set; }
         [UIHint("MultilineText")]
         [Display(Name ="Manager Notes")]
@@ -49,7 +50,7 @@ namespace FInalProject.DATA.EF//.JobBoardMetadata
     public class ApplicationStatusMetadata
     {
         public int ApplicationStatusID { get; set; }
-        [Display(Name ="Status Name")]
+        [Display(Name ="Status")]
         [Required(ErrorMessage ="Status Name is required")]
         [StringLength(50, ErrorMessage ="Must not exceed 50 characters")]
         public string StatusName { get; set; }
@@ -132,7 +133,10 @@ namespace FInalProject.DATA.EF//.JobBoardMetadata
     [MetadataType(typeof(UserDetailMetadata))]
     public partial class UserDetail
     {
-
+        public string FullName
+        {
+            get { return FirstName + " " + LastName; }
+        }
     }
     #endregion
 }

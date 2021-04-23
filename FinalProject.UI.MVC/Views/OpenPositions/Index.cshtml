@@ -1,45 +1,72 @@
 ﻿@model IEnumerable<FInalProject.DATA.EF.OpenPosition>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Open Positions";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.IsFeature)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Location.StoreNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Position.Title)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsFeature)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Location.StoreNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Position.Title)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.OpenPositionID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.OpenPositionID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.OpenPositionID })
-        </td>
-    </tr>
+@section css{
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" />
 }
 
-</table>
+<div id="main">
+    <h2>@ViewBag.Title</h2>
+
+    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+    {
+        <p>
+            @Html.ActionLink("Add Opening", "Create", null, new { @class = "btn btn-primary" })
+        </p>
+    }
+    <table class="table" id="dataTable">
+        <thead>
+            <tr>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Location.StoreNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Position.Title)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Location.StoreNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Position.Title)
+                    </td>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                    {
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.OpenPositionID }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.OpenPositionID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.OpenPositionID })
+                        </td>
+                    }
+                    @if (User.IsInRole("Employee"))
+                    {
+                        <td>
+                            @Html.ActionLink("Position Details", "Details", new { id = item.OpenPositionID }, new { @class = "btn btn-primary" })
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section scripts{
+    <script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable();
+        });
+    </script>
+}

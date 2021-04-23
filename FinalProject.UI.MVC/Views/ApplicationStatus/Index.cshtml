@@ -3,10 +3,12 @@
 @{
     ViewBag.Title = "Application Statuses";
 }
-<div is="main">
+<div id="main">
     <h2>@ViewBag.Title</h2>
 
-
+    <p>
+        @Html.ActionLink("Create Status", "Create", null, new { @class = "btn btn-primary" })
+    </p>
     <table class="table">
         <tr>
             <th>

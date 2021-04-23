@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FInalProject.DATA.EF;
+using Microsoft.AspNet.Identity;
 
 namespace FinalProject.UI.MVC.Controllers
 {
@@ -17,6 +18,20 @@ namespace FinalProject.UI.MVC.Controllers
         // GET: Applications
         public ActionResult Index()
         {
+            if (User.IsInRole("Manager"))
+            {
+                var userId = User.Identity.GetUserId();
+                var managerApps = db.Applications.Where(x => x.OpenPosition.Location.ManagerID == userId).Include(a => a.OpenPosition).Include(a => a.UserDetail);
+
+                return View(managerApps.ToList());
+            }
+            if (User.IsInRole("Employee"))
+            {
+                var userId = User.Identity.GetUserId();
+                var userApps = db.Applications.Where(x => x.UserID == userId).Include(a => a.OpenPosition).Include(a => a.UserDetail);
+
+                return View(userApps.ToList());
+            }
             var applications = db.Applications.Include(a => a.ApplicationStatu).Include(a => a.OpenPosition).Include(a => a.UserDetail);
             return View(applications.ToList());
         }
@@ -29,9 +44,17 @@ namespace FinalProject.UI.MVC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Application application = db.Applications.Find(id);
+
             if (application == null)
             {
                 return HttpNotFound();
+            }
+
+            if (User.IsInRole("Manager") && application.ApplicationStatu.StatusName == "Pending")
+            {
+                application.ApplicationStatus = 2;
+                db.Entry(application).State = EntityState.Modified;
+                db.SaveChanges();
             }
             return View(application);
         }
@@ -135,6 +158,26 @@ namespace FinalProject.UI.MVC.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult OneClickApply(int id)
+        {
+            string userId = User.Identity.GetUserId();
+
+            Application empApp = new Application();
+         
+            UserDetail userDetail = db.UserDetails.Where(x => x.UserID == userId).FirstOrDefault();
+
+            empApp.UserID = userId;
+            empApp.OpenPositionID = id;
+            empApp.ApplicationDate = DateTime.Now;
+            empApp.ApplicationStatus = 1;
+            empApp.ResumeFilename = userDetail.ResumeFilename;
+            db.Applications.Add(empApp);
+            db.SaveChanges();
+            
+
+            return View("ApplicationConfirmed", empApp);
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FInalProject.DATA.EF;
+using Microsoft.AspNet.Identity;
 
 namespace FinalProject.UI.MVC.Controllers
 {
@@ -17,7 +18,17 @@ namespace FinalProject.UI.MVC.Controllers
         // GET: OpenPositions
         public ActionResult Index()
         {
+            if (User.IsInRole("Manager"))
+            {
+                var managerID = User.Identity.GetUserId();
+
+                var managerPositions = db.OpenPositions.Where(x => x.Location.ManagerID == managerID).Include(o => o.Location).Include(o => o.Position);
+
+                return View(managerPositions.ToList());
+            }
+
             var openPositions = db.OpenPositions.Include(o => o.Location).Include(o => o.Position);
+
             return View(openPositions.ToList());
         }
 
@@ -39,7 +50,9 @@ namespace FinalProject.UI.MVC.Controllers
         // GET: OpenPositions/Create
         public ActionResult Create()
         {
-            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "StoreNumber");
+            var managerID = User.Identity.GetUserId();
+
+            ViewBag.LocationID = new SelectList(db.Locations.Where(x => x.ManagerID == managerID), "LocationID", "StoreNumber");
             ViewBag.PositionID = new SelectList(db.Positions, "PositionID", "Title");
             return View();
         }
