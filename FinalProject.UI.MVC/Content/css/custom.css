@@ -3,7 +3,7 @@
     margin: auto;
     padding-top: 10em;
 }
-@media (max-width: 900px){
+@media (max-width: 1000px){
     #main {
         max-width: 900px;
         font-size: 13px;
@@ -13,6 +13,9 @@
     }
     .hero-v1 .illustration{
         display: none;
+    }
+    #home-page-button{
+        z-index: 100000;
     }
 }
 .profile-photo {
@@ -50,14 +53,21 @@
 #legend dt{
     margin-left: 1.5em;
 }
-table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > td:first-child:before {
-    background-color: #6F42C1;
-    height: 1.5em;
-    width: 1.5em;
-}
-table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before {
-    background-color: #d33333;
-}
+
 .fab{
     font-size: x-large;
+}
+/*@media(max-width: 1000px){
+    table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > td:first-child:before {
+        background-color: #6F42C1;
+        height: 1.5em;
+        width: 1.5em;                                                                               This CSS was moved into its own file for the sake of troubleshooting
+    }
+
+    table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before {
+        background-color: #d33333;
+    }
+}*/
+.fas.fa-exclamation-triangle {
+    font-size: 10em;
 }

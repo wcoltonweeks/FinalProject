@@ -196,6 +196,7 @@
     <Content Include="Content\css\bootstrap-datepicker.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\bootstrap\mixins\_deprecate.css" />
+    <Content Include="Content\css\custom-datatables-styling.css" />
     <Content Include="Content\css\custom.css" />
     <Content Include="Content\css\jquery-ui.css" />
     <Content Include="Content\css\jquery.fancybox.min.css" />
@@ -587,6 +588,7 @@
     <Content Include="Views\Applications\ApplicationConfirmed.cshtml" />
     <Content Include="Views\Applications\Delete.cshtml" />
     <Content Include="Views\Home\ApiTest.cshtml" />
+    <Content Include="Views\Applications\ApplicationError.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

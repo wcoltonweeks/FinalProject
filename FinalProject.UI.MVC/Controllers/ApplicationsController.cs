@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FInalProject.DATA.EF;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using FInalProject.DATA.EF;
-using Microsoft.AspNet.Identity;
 
 namespace FinalProject.UI.MVC.Controllers
 {
@@ -165,25 +163,34 @@ namespace FinalProject.UI.MVC.Controllers
             }
             base.Dispose(disposing);
         }
-        [Authorize(Roles="Employee")]
+        [Authorize(Roles = "Employee")]
         public ActionResult OneClickApply(int id)
         {
             string userId = User.Identity.GetUserId();
 
             Application empApp = new Application();
-         
+
             UserDetail userDetail = db.UserDetails.Where(x => x.UserID == userId).FirstOrDefault();
 
-            empApp.UserID = userId;
-            empApp.OpenPositionID = id;
-            empApp.ApplicationDate = DateTime.Now;
-            empApp.ApplicationStatus = 1;
-            empApp.ResumeFilename = userDetail.ResumeFilename;
-            db.Applications.Add(empApp);
-            db.SaveChanges();
-            
+            if (userDetail.ResumeFilename != null)
+            {
+                empApp.UserID = userId;
+                empApp.OpenPositionID = id;
+                empApp.ApplicationDate = DateTime.Now;
+                empApp.ApplicationStatus = 1;
+                empApp.ResumeFilename = userDetail.ResumeFilename;
+                db.Applications.Add(empApp);
+                db.SaveChanges();
 
-            return View("ApplicationConfirmed", empApp);
+                return View("ApplicationConfirmed", empApp);
+            }
+
+            return RedirectToAction("ApplicationError");
+        }
+
+        public ActionResult ApplicationError()
+        {
+            return View();
         }
     }
 }

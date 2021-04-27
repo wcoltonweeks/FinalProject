@@ -4,8 +4,9 @@
     ViewBag.Title = "Applications";
 }
 @section css{
-    <link href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="http://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/responsive/2.2.1/css/responsive.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/css/custom-datatables-styling.css" rel="stylesheet" />
 }
 
 <div id="main">
@@ -116,12 +117,19 @@
 
     <!-- Place scripts below jQuery (jQuery may already be referenced in your project) -->
     <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
+    <script src="//cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
     <script>
+        $.fn.dataTable.Responsive.breakpoints = [
+            { name: 'desktop', width: Infinity },
+            { name: 'tablet', width: 768 },
+            { name: 'phone', width: 480 }
+        ];
+
         $(document).ready(function () {
             $('#dataTable').DataTable({
                 responsive: true
             });
         });
     </script>
+
 }
