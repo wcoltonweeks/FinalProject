@@ -12,9 +12,7 @@
 <div id="main">
     <h2>@ViewBag.Title</h2>
 
-    @*<p>
-            @Html.ActionLink("Create New", "Create")
-        </p>*@
+
     <hr />
     <table class="table" id="dataTable">
         <thead>
@@ -93,7 +91,7 @@
                     <td>
 
                         @Html.ActionLink("Details", "Details", new { id = item.ApplicationID }, new { @class = "btn btn-primary" })
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ApplicationID })
+
                     </td>
                 </tr>
             }
