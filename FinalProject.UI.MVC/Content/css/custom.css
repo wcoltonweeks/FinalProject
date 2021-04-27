@@ -8,6 +8,11 @@
         max-width: 900px;
         font-size: 13px;
         margin: auto;
+        padding: 1em;
+        padding-top: 10em; 
+    }
+    .hero-v1 .illustration{
+        display: none;
     }
 }
 .profile-photo {
@@ -18,4 +23,41 @@
 
 .profile-photo img{
     max-width: 300px;
+}
+
+#pending {
+    color: #333;
+    font-size: x-large;
+}
+
+#viewed {
+    color: #333;
+    font-size: x-large;
+}
+
+#accepted {
+    color: #0f0;
+    font-size: x-large;
+}
+
+#rejected {
+    color: #f00;
+    font-size: x-large;
+}
+#legend{
+    display:inherit;  
+}
+#legend dt{
+    margin-left: 1.5em;
+}
+table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > td:first-child:before {
+    background-color: #6F42C1;
+    height: 1.5em;
+    width: 1.5em;
+}
+table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before {
+    background-color: #d33333;
+}
+.fab{
+    font-size: x-large;
 }

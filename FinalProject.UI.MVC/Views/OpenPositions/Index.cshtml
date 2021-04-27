@@ -5,7 +5,8 @@
 }
 
 @section css{
-    <link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" />
+    <link href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/2.2.1/css/responsive.dataTables.min.css" rel="stylesheet" />
 }
 
 <div id="main">
@@ -63,10 +64,15 @@
     </table>
 </div>
 @section scripts{
-    <script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+    <!-- Place scripts below jQuery (jQuery may already be referenced in your project) -->
+    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#dataTable').DataTable();
+            $('#dataTable').DataTable({
+      
+            });           
         });
     </script>
 }

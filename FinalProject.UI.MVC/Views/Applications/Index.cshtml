@@ -3,62 +3,125 @@
 @{
     ViewBag.Title = "Applications";
 }
+@section css{
+    <link href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/2.2.1/css/responsive.dataTables.min.css" rel="stylesheet" />
+}
 
 <div id="main">
     <h2>@ViewBag.Title</h2>
 
     @*<p>
-        @Html.ActionLink("Create New", "Create")
-    </p>*@
+            @Html.ActionLink("Create New", "Create")
+        </p>*@
     <hr />
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ApplicationDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserDetail.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OpenPosition.Position.Title)
-            </th>
+    <table class="table" id="dataTable">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ApplicationDate)
+                </th>
+                @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                {
+                    <th>
+                        @Html.DisplayNameFor(model => model.UserDetail.FullName)
+                    </th>
+                }
+                <th>
+                    @Html.DisplayNameFor(model => model.OpenPosition.Position.Title)
+                </th>
 
 
-            <th>
-                @Html.DisplayNameFor(model => model.ApplicationStatu.StatusName)
-            </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ApplicationStatu.StatusName)
+                </th>
 
 
 
-            <th></th>
-        </tr>
+                <th></th>
+            </tr>
+        </thead>
 
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ApplicationDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserDetail.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OpenPosition.Position.Title)
-            </td>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ApplicationDate)
+                    </td>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserDetail.FullName)
+                        </td>
+                    }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OpenPosition.Position.Title)
+                    </td>
 
 
-            <td>
-                @Html.DisplayFor(modelItem => item.ApplicationStatu.StatusName)
-            </td>
+                    <td>
+                        @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
+                        {
+                            @Html.DisplayFor(modelItem => item.ApplicationStatu.StatusName)
+                        }
+                        @if (User.IsInRole("Employee"))
+                        {
+                            @Html.HiddenFor(modelItem => item.ApplicationStatus)
+
+                            if (item.ApplicationStatu.StatusName == "Pending")
+                            {
+                                <i id="pending" class="fas fa-minus-circle" alt="Pending"></i>
+                            }
+                            if (item.ApplicationStatu.StatusName == "Viewed")
+                            {
+                                <i id="viewed" class="fas fa-check-circle"></i>
+                            }
+                            if (item.ApplicationStatu.StatusName == "Accepted")
+                            {
+                                <i id="accepted" class="fas fa-check-circle"></i>
+                            }
+                            if (item.ApplicationStatu.StatusName == "Rejected")
+                            {
+                                <i id="rejected" class="fas fa-times-circle"></i>
+                            }
+                        }
+                    </td>
 
 
-            <td>
+                    <td>
 
-                @Html.ActionLink("Details", "Details", new { id = item.ApplicationID }, new { @class = "btn btn-primary" }) 
-                @Html.ActionLink("Delete", "Delete", new { id = item.ApplicationID })
-            </td>
-        </tr>
-        }
-
+                        @Html.ActionLink("Details", "Details", new { id = item.ApplicationID }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ApplicationID })
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
+    <div class="row">
+        <dl id="legend">
+            <dt> <i id="pending" class="fas fa-minus-circle" alt="Pending"></i></dt>
+            <dd>Pending</dd>
+            <dt><i id="viewed" class="fas fa-check-circle"></i></dt>
+            <dd>Viewed</dd>
+            <dt><i id="accepted" class="fas fa-check-circle"></i></dt>
+            <dd>Accepted</dd>
+            <dt><i id="rejected" class="fas fa-times-circle"></i></dt>
+            <dd>Rejected</dd>
+        </dl>
+    </div>
 </div>
+
+@section scripts{
+
+    <!-- Place scripts below jQuery (jQuery may already be referenced in your project) -->
+    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable({
+                responsive: true
+            });
+        });
+    </script>
+}
